@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background:linear-gradient(to right bottom, rgb(190, 189, 189),transparent 50%);
+}
+.login-form {
+  width: 30%;
+  height: 70vh; 
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid grey;
+  padding: 30px 30px 10px 30px;
+  border-radius: 10px;
+  box-shadow: 5px 10px 10px #575757;
+  background: linear-gradient(to bottom right, rgb(192, 222, 250), rgb(182, 180, 180));
+}
+.login-form::before{
+  content: '';
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  position: absolute;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3),rgba(255,255,255,0.5) 10%,transparent,rgba(255,255,255,0.2));
+  pointer-events: none;
+  border-radius: 10px;
+  border: 1px solid grey;
+}
+.login-form form{
+  width: 100%;
+}
+.login-form form div{
+  margin-bottom: 30px;
+}
+#submit{
+  display: block;
+  margin: 10px auto;
+}
+legend{
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin-bottom: 10px;
+  color: #575757;
+}
+
+@media screen and (max-width: 1000px){
+  .login-form{
+    width: 100%;
+    margin: 20px;
+    height: 60vh;
+  }
+}

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="{{ url_for('static', filename='img/logo-modified.png') | autoversion}}" type="image/x-icon" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main_style.css') | autoversion}}" />
+  <link
+      rel="icon"
+      href="{{ url_for('static', filename='img/logo-modified.png') | autoversion}}"
+      type="image/x-icon"
+    />
+  <title>Dripta Senapati</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+</head>
+
+<body>
+  <header>
+    <div class="nav_bar_container">
+      <div class="brand_name">
+        <img src="{{ url_for('static', filename='img/logo-modified.png') | autoversion}}" alt="" style="width: 39px; width: 39px" />
+        <div class="brand"><a href="{{ url_for('main.login')}}" target="_blank" 
+          style="color: whitesmoke;text-decoration: none;">Dri<span style="color: chocolate">pta</span></a></div>
+      </div>
+      <div class="nav_links_container">
+        <ul class="nav_links">
+          <li class="nav_link active"><a href="#home">Home</a></li>
+          <li class="nav_link"><a href="#about">About</a></li>
+          <li class="nav_link"><a href="#resume">Resume</a></li>
+          <li class="nav_link">
+            <a href="#accomplishments">Accomplishments</a>
+          </li>
+        </ul>
+      </div>
+      <div class="hamburger_menu_container">
+        <input type="checkbox" id="check" />
+        <div class="hamburger_menu">
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="page_cover"></div>
+  <section class="landing_page" id="home">
+    <div class="landing_page_container">
+      <div class="name">
+        <h4>Dripta <span style="color: rgb(255, 210, 61)">Senapati</span></h4>
+      </div>
+      <p class="work_name">
+        {{jobs[0].role}} at
+        <span style="color: rgb(107, 107, 255)">{{jobs[0].company}}</span>
+      </p>
+      <div class="home_animate">
+        <span id="home_animate"> </span>
+      </div>
+      <div class="cv_button">
+        <a
+          href="{{ url_for('main.getpdf')}}"
+          target="_blank"
+            >Download CV</a> </div>
+    </div>
+  </section>
+  <section class="about" id="about">
+    <div class="about_container">
+      <div class="about_writings">
+        <h2>About Me</h2>
+        <div class="margin"></div>
+        <div class="writing">
+          <p>
+            I am a Post graduate in Statistics.Working hard to learn and apply
+            my knowledge of Statistics and Computer Science to develop robust
+            and scalable models. The rapid development in the field of
+            Artificial Intelligence and Machine learning has become an
+            attraction for me. I am always willing to innovate new things that
+            can improve existing technologies.
+          </p>
+        </div>
+      </div>
+      <div class="image_container">
+        <img src="{{ url_for('static', filename='img/aboutDP.jpg') | autoversion}}" alt="" />
+      </div>
+    </div>
+  </section>
+  <section class="resume" id="resume">
+    <div class="resume_container">
+      <h2 class="resume_header">What I do</h2>
+      <div class="resume_data">
+        <div class="svg">
+          <img src="{{ url_for('static', filename='img/undraw_Work_time_re_hdyv.svg') | autoversion}}" alt="" />
+        </div>
+        <div class="data_container">
+          <div class="job_experiences">
+            <div class="nav_exp">
+              <ul>
+                <li class="exp_list active" data-filter="Job">Work Experience</li>
+                <li class="exp_list" data-filter="testimonial">Testimonial</li>
+              </ul>
+            </div>
+            <div class="itemexp job_container Job">
+              {% for j in jobs[::-1] %}
+                <div class="job">
+                  <h3>
+                    {{j.role}} at 
+                    <span style="color: rgb(126, 52, 0)">{{j.company}}</span>
+                  </h3>
+                  {% if not j.end %}
+                    <h4>
+                      {{j.start.strftime("%b %Y")}}-present &nbsp
+                      ({{exp[jobs.index(j)]}})
+                    </h4>
+                  {% else %}
+                    <h4>
+                      {{j.start.strftime("%b %Y")}}-{{j.end.strftime("%b
+                      %Y")}} &nbsp ({{exp[jobs.index(j)]}})
+                    </h4>
+                  {% endif %}
+                  <p style="color: rgb(126, 52, 0)">{{j.place}}</p>
+                  <p style="margin: 10px;">
+                    {{j.jd}}
+                  </p>
+                </div>
+                {% endfor %}
+              <div class="navigation">
+                <span class="left"><i class="fa fa-long-arrow-left fa-2x" aria-hidden="true"></i></span>
+                <span class="right"><i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i></span>
+              </div>
+            </div>
+            <div class="itemexp testimonial_container testimonial">
+              {% for i in testimoni_data %}
+              <div class="testi">
+                <div class="testi_img">
+                  <img src="{{ url_for('static', filename='img/'+i.image_file) | autoversion}}" alt="">
+                </div>
+                <div class="testi_container">
+                  <h3 style="color: chocolate;">
+                    {{i.name}}
+                  </h3>
+                  <h4>{{i.desc}}</h4>
+                  <p>
+                    {{i.testimony}}
+                  </p>
+                </div>
+              </div>
+              {% endfor %}
+              <div class="navigation">
+                <span class="left"><i class="fa fa-long-arrow-left fa-2x" aria-hidden="true"></i></span>
+                <span class="right"><i class="fa fa-long-arrow-right fa-2x" aria-hidden="true"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="skills">
+            <div class="skill_desc">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Pariatur officiis, quasi tempora expedita harum quaerat. Vitae
+              cum illo voluptatem quidem.
+            </div>
+            <div class="readButton">
+              <button type="submit">Read More</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal_skills">
+        <div class="modal_container">
+          <div class="modal_cancel">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </div>
+          <div class="modal_header">
+            <h3>Web Design</h3>
+            <h3>Analytics</h3>
+          </div>
+          <div class="modal_content">
+            <div class="design_content">
+              {% for j in skills %}
+                {% if j.sk_type == 'Web Design' %}
+                  <div class="design_skill">
+                    <div class="design_skill_name">{{j.sk_name}}</div>
+                    <div class="design_skill_bar">
+                      <div class="design_skill_per" per="{{j.sk_value}}"></div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="analytics_content">
+              {% for j in skills %}
+                {% if j.sk_type == 'Analytics' %}
+                  <div class="analytics_skill">
+                    <div class="analytics_skill_name">{{j.sk_name}}</div>
+                    <div class="analytics_skill_bar">
+                      <div class="analytics_skill_per" per="{{j.sk_value}}"></div>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="accomplishments" id="accomplishments">
+    <div class="accomplishment_container">
+      <h3 class="accomplishment_header">My Portfolio</h3>
+      <div class="accomplishment_content">
+        <ul>
+          <li class="list active" data-filter="*">All</li>
+          <li class="list" data-filter="projects">Projects</li>
+          <li class="list" data-filter="certificates">Certificates</li>
+        </ul>
+        <div class="filter_content">
+          {% for p in projects %}
+            {% if p.proj_type == 'Project' %}
+              <div class="item projects">
+                <h4 style="color: chocolate;">{{p.p_name}}</h4>
+                <div class="accom_content">
+                  {% if p.p_description %}
+                  <p>{{ p.p_description }}</p>
+                  {% endif %} {% if p.Organization %}
+                  <p>Organization: <span>{{ p.Organization }}</span></p>
+                  {% endif %} {% if p.p_url %} {% if 'github' in p.p_url %}
+                  <p>GitHub Link: <a href="{{ p.p_url }}">{{ p.p_url }}</a></p>
+                  {% endif %} {% if 'pypi' in p.p_url %}
+                  <p>Pypi Link: <a href="{{ p.p_url }}">{{ p.p_url }}</a></p>
+                  {% endif %} {% endif %} {% if p.cred_id %}
+                  <p>Credential id:<span>{{ p.cred_id }}</span></p>
+                  {% endif %} {% if p.certi_url %}
+                  <p>
+                    Cerificate:<a href="{{ p.certi_url }}">{{ p.certi_url }}</a>
+                  </p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+            {% if p.proj_type == 'Certificate' %}
+              <div class="item certificates">
+                <h4 style="color: chocolate;">{{p.p_name}}</h4>
+                <div class="accom_content">
+                  {% if p.p_description %}
+                  <p>{{ p.p_description }}</p>
+                  {% endif %} {% if p.Organization %}
+                  <p>Organization: <span>{{ p.Organization }}</span></p>
+                  {% endif %} {% if p.p_url %} {% if 'github' in p.p_url %}
+                  <p>GitHub Link: <a href="{{ p.p_url }}">{{ p.p_url }}</a></p>
+                  {% endif %} {% if 'pypi' in p.p_url %}
+                  <p>Pypi Link: <a href="{{ p.p_url }}">{{ p.p_url }}</a></p>
+                  {% endif %} {% endif %} {% if p.cred_id %}
+                  <p>Credential id:<span>{{ p.cred_id }}</span></p>
+                  {% endif %} {% if p.certi_url %}
+                  <p>
+                    Cerificate:<a href="{{ p.certi_url }}">{{ p.certi_url }}</a>
+                  </p>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="footer">
+    <div class="footer_container">
+      <h4>
+        <span style="color: chocolate">Thank you</span> for visiting
+        <span style="border-bottom: 1px solid chocolate">my website.</span>
+      </h4>
+      <div class="scial_logo">
+        <ul>
+          <li><a href="https://github.com/DriptaSenapati"><i class="fa fa-github-square" aria-hidden="true"></i></a>
+          </li>
+          <li><a href="https://www.linkedin.com/in/dripta-senapati-088b5b199/"><i class="fa fa-linkedin-square"
+                aria-hidden="true"></i></a></li>
+          <li><a href="https://www.facebook.com/dripta.senapati"><i class="fa fa-facebook-square"
+                aria-hidden="true"></i></a> </li>
+        </ul>
+      </div>
+      <div class="back_top" onclick='window.scrollTo({top: 0, behavior: "smooth"});'>
+        <i class="fa fa-chevron-circle-up" aria-hidden="true"></i></i>
+      </div>
+    </div>
+  </section>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+  
+  <script>
+    $(document).on("DOMMouseScroll mousewheel", ".Scrollable", function (ev) {
+      var $this = $(this),
+        scrollTop = this.scrollTop,
+        scrollHeight = this.scrollHeight,
+        height = $this.innerHeight(),
+        delta =
+          ev.type == "DOMMouseScroll"
+            ? ev.originalEvent.detail * -40
+            : ev.originalEvent.wheelDelta,
+        up = delta > 0;
+
+      var prevent = function () {
+        ev.stopPropagation();
+        ev.preventDefault();
+        ev.returnValue = false;
+        return false;
+      };
+
+      if (!up && -delta > scrollHeight - height - scrollTop) {
+        // Scrolling down, but this will take us past the bottom.
+        $this.scrollTop(scrollHeight);
+        return prevent();
+      } else if (up && delta > scrollTop) {
+        // Scrolling up, but this will take us past the top.
+        $this.scrollTop(0);
+        return prevent();
+      }
+    });
+  </script>
+  <script>
+    var typed = new Typed("#home_animate", {
+      strings: [
+        "Data Scientist",
+        "Data Scientist",
+        "Statistician",
+        "Developer",
+      ],
+      typespeed: 1000,
+      backspeed: 5000,
+      backDelay: 2000,
+      showCursor: true,
+      cursorChar: "|",
+      autoInsertCss: true,
+      loop: true,
+    });
+    $("#check").click(() => {
+      if ($("#check").prop("checked")) {
+        $(".nav_links_container").addClass("nav_active");
+      } else {
+        $(".nav_links_container").removeClass("nav_active");
+      }
+    });
+
+    nav_links = document.querySelectorAll(".nav_link");
+    nav_link_list = document.querySelectorAll(".nav_link a");
+
+    function AddActiveNav(index) {
+      nav_links[index].classList.add("active");
+    }
+
+    nav_link_list.forEach((item, i) => {
+      item.addEventListener("click", function () {
+        nav_links.forEach((e, j) => {
+          e.classList.remove("active");
+        });
+        AddActiveNav(i);
+        $(".nav_links_container").removeClass("nav_active");
+        $("#check").prop("checked", false);
+        $(".page_cover").css("height", "100vh");
+        setTimeout(function () {
+          $(".page_cover").addClass("down");
+        }, 500);
+        clearTimeout();
+        $(".page_cover").removeClass("down");
+      });
+    });
+
+    var windowheight = window.innerHeight;
+    var about = document.querySelector("#about");
+    var resume = document.querySelector("#resume");
+    var accomplishments = document.querySelector("#accomplishments");
+
+    document.addEventListener("scroll", () => {
+      if (about.getBoundingClientRect().top < windowheight / 2) {
+        nav_links.forEach((e, j) => {
+          e.classList.remove("active");
+        });
+        AddActiveNav(1);
+        if (!about.classList.contains("active")) {
+          about.classList.add("active");
+        }
+        if (window.innerWidth > 1000) {
+          $(".nav_bar_container").css("background", "rgba(27,25,26,0.8)");
+          $(".nav_bar_container").css("backdrop-filter", "blur(10px)");
+        }
+      } else if (about.getBoundingClientRect().top > windowheight / 2) {
+        nav_links.forEach((e, j) => {
+          e.classList.remove("active");
+        });
+        console.log("ok");
+        AddActiveNav(0);
+        if (about.classList.contains("active")) {
+          about.classList.remove("active");
+        }
+        if (window.innerWidth > 1000) {
+          $(".nav_bar_container").css("background", "transparent");
+          $(".nav_bar_container").css("backdrop-filter", "blur(0px)");
+        }
+      }
+
+      if (resume.getBoundingClientRect().top < windowheight / 2) {
+        nav_links.forEach((e, j) => {
+          e.classList.remove("active");
+        });
+        AddActiveNav(2);
+        if (!resume.classList.contains("active")) {
+          resume.classList.add("active");
+        }
+      } else if (
+        resume.getBoundingClientRect().top > windowheight / 2 &&
+        resume.getBoundingClientRect().top <= windowheight
+      ) {
+        nav_links.forEach((e, j) => {
+          e.classList.remove("active");
+        });
+        AddActiveNav(1);
+        if (resume.classList.contains("active")) {
+          resume.classList.remove("active");
+        }
+      }
+
+      if (accomplishments.getBoundingClientRect().top < windowheight / 2) {
+        nav_links.forEach((e, j) => {
+          e.classList.remove("active");
+        });
+        AddActiveNav(3);
+        if (!accomplishments.classList.contains("active")) {
+          accomplishments.classList.add("active");
+        }
+      } else if (
+        accomplishments.getBoundingClientRect().top > windowheight / 2 &&
+        accomplishments.getBoundingClientRect().top <= windowheight
+      ) {
+        nav_links.forEach((e, j) => {
+          e.classList.remove("active");
+        });
+        AddActiveNav(2);
+        if (accomplishments.classList.contains("active")) {
+          accomplishments.classList.remove("active");
+        }
+      }
+    });
+  </script>
+  <script>
+    var left = document.querySelector(".job_container .left");
+    var right = document.querySelector(".job_container .right");
+
+    var testi_left = document.querySelector(".testimonial_container .left");
+    var testi_right = document.querySelector(".testimonial_container .right");
+
+
+    var joblist = document.querySelectorAll(".job");
+    var currentActive = joblist.length - 1;
+    var testi_list = document.querySelectorAll(".testi");
+    var currentActive_testi = testi_list.length - 1;
+
+    function Arrow_Control(CurrActive, right, left, list) {
+      if (CurrActive == 0 && CurrActive != list.length - 1) {
+        right.style.opacity = "0.2";
+        right.style.pointerEvents = "none";
+        left.style.pointerEvents = "auto";
+        left.style.opacity = "1";
+      } else if (CurrActive == list.length - 1 && CurrActive != 0) {
+        left.style.opacity = "0.2";
+        left.style.pointerEvents = "none";
+        right.style.pointerEvents = "auto";
+        right.style.opacity = "1";
+      } else if (CurrActive == list.length - 1 && CurrActive == 0) {
+        left.style.opacity = "0.2";
+        left.style.pointerEvents = "none";
+        right.style.opacity = "0.2";
+        right.style.pointerEvents = "none";
+      } else {
+        left.style.opacity = "1";
+        right.style.opacity = "1";
+        left.style.pointerEvents = "auto";
+        right.style.pointerEvents = "auto";
+      }
+    }
+
+    right.addEventListener("click", () => {
+      joblist[currentActive].classList.add("release");
+      currentActive = currentActive - 1;
+      Arrow_Control(currentActive, right, left, joblist);
+    });
+    left.addEventListener("click", () => {
+      joblist[currentActive + 1].classList.remove("release");
+      currentActive = currentActive + 1;
+      Arrow_Control(currentActive, right, left, joblist);
+    });
+    Arrow_Control(currentActive, right, left, joblist);
+
+
+    testi_right.addEventListener("click", () => {
+      testi_list[currentActive_testi].classList.add("release");
+      currentActive_testi = currentActive_testi - 1;
+      Arrow_Control(currentActive_testi, testi_right, testi_left, testi_list);
+    });
+    testi_left.addEventListener("click", () => {
+      testi_list[currentActive_testi + 1].classList.remove("release");
+      currentActive_testi = currentActive_testi + 1;
+      Arrow_Control(currentActive_testi, testi_right, testi_left, testi_list);
+    });
+    Arrow_Control(currentActive_testi, testi_right, testi_left, testi_list);
+
+    var exp_list = document.querySelectorAll(".exp_list");
+
+    exp_list.forEach((el, i) => {
+      el.addEventListener("click", () => {
+        var exp_data = el.dataset.filter;
+        $(".itemexp").not("." + exp_data).hide();
+        $(".itemexp").filter("." + exp_data).fadeIn(1500);
+
+        exp_list.forEach((e, i) => {
+          e.classList.remove("active");
+        });
+        el.classList.add("active");
+      })
+    })
+    $(".itemexp").not(".Job").hide();
+    $(".itemexp").filter(".Job").show();
+
+
+
+
+
+
+
+
+
+
+
+
+    $(".readButton button").click(() => {
+      $(".modal_skills").addClass("active");
+
+      $(".design_skill_per").each((e, j) => {
+        var $this = $(this);
+        var per = j.getAttribute("per");
+        j.style.width = per + "%";
+        $({ animatedValue: 0 }).animate(
+          { animatedValue: per },
+          {
+            duration: 1000,
+            step: function () {
+              j.setAttribute("per", Math.floor(this.animatedValue + 1));
+            },
+          }
+        );
+      });
+
+      $(".analytics_skill_per").each((p, q) => {
+        var $this = $(this);
+        var per = q.getAttribute("per");
+        q.style.width = per + "%";
+        $({ animatedValue: 0 }).animate(
+          { animatedValue: per },
+          {
+            duration: 1000,
+            step: function () {
+              console.log(Math.floor(this.animatedValue + 1));
+              q.setAttribute("per", Math.floor(this.animatedValue + 1));
+            },
+          }
+        );
+      });
+    });
+    $(".modal_container .modal_cancel").click(() => {
+      $(".modal_skills").removeClass("active");
+      $(".design_skill_per").each((e, j) => {
+        j.style.width = "0%";
+      });
+      $(".analytics_skill_per").each((e, j) => {
+        j.style.width = "0%";
+      });
+    });
+  </script>
+  
+  <script>
+    var list = document.querySelectorAll(".list");
+
+
+    $('.filter_content').isotope({
+      itemSelector: '.filter_content .item',
+      layoutMode: 'fitRows'
+    });
+
+    $(".accomplishment_content .list").click((e)=>{
+
+      var selector = e.target.dataset.filter;
+      $(`.${e.target.className}`).siblings().removeClass("active");
+      e.target.classList.add("active");
+      
+      if (selector != '*') {
+        selector = '.'+selector;
+      }
+
+      $('.filter_content').isotope({
+        filter: selector
+      });
+
+
+    })
+  </script>
+</body>
+
+</html>

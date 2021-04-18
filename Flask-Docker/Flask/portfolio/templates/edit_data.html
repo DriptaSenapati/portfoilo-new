@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit form</title>
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='img/logo-modified.png')}}"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <style>
+      .custom{
+        margin: 30px auto;
+        padding: 20px;
+        border: 1px solid grey;
+        width: 50%;
+        border-radius: 10px;
+      }
+      .img_container{
+        text-align: center;
+      }
+      .img{
+        text-align: center;
+        margin: auto;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+      }
+      .img .img_control{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 125px;
+        height: 125px;
+        border-radius: 50%;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.5s ease;
+        background: rgba(0, 0, 0, 0.384);
+      }
+      .img:hover .img_control{
+        visibility: visible;
+        opacity: 1;
+      }
+      .img .img_control .control{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100%;
+      }
+      .img .img_control i{
+        cursor: pointer;
+        color: rgba(230, 220, 220, 0.925);
+      }
+      .img img{
+        height: 125px;
+        width: 125px;
+        margin: auto;
+      }
+      @media screen and (max-width: 1000px){
+        .custom{
+          width: 90%;
+        }
+        .custom h2{
+          font-size: 20px;
+        }
+        .custom img{
+          width: 64px;
+          height: 64px;
+        }
+        .img .img_control{
+          width: 64px;
+          height: 64px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('main.home')}}" target="_blank">Website</a>
+          </li>
+          {% if current_user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('main.logout')}}">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('main.login')}}">Login</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+    </nav>
+    <div class="container custom">
+      <h2 style="text-align: center;">Edit Data</h2>
+    <form method="POST" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <!-- <legend>Log in</legend> -->
+      {% if pic %}
+      <div class="img_container">
+        <div class="img">
+          <img src="{{url_for('static',filename='img/'+image.image_file) | autoversion}}" alt="testimoni_pic" class="rounded-circle">
+          <div class="img_control">
+            <div class="control">
+              <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true" aria-hidden="true" data-toggle="modal" data-target="#exampleModalCenter"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      {% if type == 'testimoni' %}
+        {% for field in form %}
+          {% if field.type != 'CSRFTokenField'  %}
+            {% if field.type != 'FileField' %}
+              {% if field.type == 'SubmitField' %}
+                <span class="form-group">
+                  {{ field(class="btn btn-outline-info") }}
+                </span>
+                {% else %}
+                  {% if field.type == 'FileField' %} 
+                    <div class="form-group">
+                      {{ field.label() }}
+                      {{ field(class="form-control-file") }}
+                      {% if field.errors %}
+                        {% for error in field.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+                    {% else %}
+                      {% if field.type == 'RadioField' %}
+                        {{field.label(class="form-control-label")}}
+                        <div class="form-group">
+                          {% for sub in field %}
+                            <div class="form-check">
+                              {{ sub(class="form-check-input") }}
+                              {{ sub.label(class="form-check-label") }}
+                            </div>
+                          {% endfor %}
+                          {% if field.errors %}
+                            <div>
+                              {% for error in field.errors %}
+                                <span class="text-danger">{{ error }}</span></br>
+                              {% endfor %}
+                            </div>
+                          {% endif %}
+                        </div>
+                        {% else %}
+                        <div class="form-group">
+                          {{field.label(class="form-control-label")}}
+                          {% if field.errors %}
+                            {{field(class="form-control is-invalid")}}
+                            <div class="invalid-feedback">
+                              {% for error in field.errors %}
+                              <span>{{ error }}</span>
+                              {% endfor %}
+                            </div>
+                            {% else %}
+                            {{field(class="form-control")}}
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                  {% endif %}
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+      {% if type == 'job' %}
+        <div class="form-group">
+          {{form.role.label(class="form-control-label")}}
+          {% if form.role.errors %}
+            {{form.role(class="form-control is-invalid")}}
+            <div class="invalid-feedback">
+              {% for error in form.role.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %}
+            {{form.role(class="form-control")}}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{form.company.label(class="form-control-label")}}
+          {% if form.company.errors %}
+            {{form.company(class="form-control is-invalid")}}
+            <div class="invalid-feedback">
+              {% for error in form.company.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %}
+            {{form.company(class="form-control")}}
+          {% endif %}
+        </div>
+        <div class="form-check">
+          {{form.current(class="form-check-input")}}
+          {{form.current.label(class="form-check-label")}}
+          {% if form.current.errors %}
+            <div class="invalid-feedback d-block">
+              {% for error in form.current.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            {{form.start.label(class="form-control-label")}}
+            {% if form.start.errors %}
+              {{form.start(class="form-control is-invalid")}}
+              <div class="invalid-feedback">
+                {% for error in form.start.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %}
+              {{form.start(class="form-control")}}
+            {% endif %}
+          </div>
+          <div class="form-group col-md-6">
+            {{form.end.label(class="form-control-label")}}
+            {% if form.end.errors %}
+              {{form.end(class="form-control is-invalid")}}
+              <div class="invalid-feedback">
+                {% for error in form.end.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+              {% else %}
+              {{form.end(class="form-control")}}
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group">
+          {{form.place.label(class="form-control-label")}}
+          {% if form.place.errors %}
+            {{form.place(class="form-control is-invalid")}}
+            <div class="invalid-feedback">
+              {% for error in form.place.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %}
+            {{form.place(class="form-control")}}
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{form.jd.label(class="form-control-label")}}
+          {% if form.jd.errors %}
+            {{form.jd(class="form-control is-invalid")}}
+            <div class="invalid-feedback">
+              {% for error in form.jd.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% else %}
+            {{form.jd(class="form-control")}}
+          {% endif %}
+        </div>
+        <span class="form-group">
+          {{ form.submit(class="btn btn-outline-info") }}
+        </span>
+      {% endif %}
+      <a href="{{url_for('main.data')}}">
+        <button type="button" class="btn btn-light">Cancel</button></a
+      >
+    </form>
+    {% if pic %}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Change Picture</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="restore()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="img_container">
+              <div class="img">
+                <img src="{{url_for('static',filename='img/'+image.image_file) | autoversion}}" alt="testimoni_pic" class="rounded-circle" id="recom_pic">
+                <div class="img_control">
+                  <div class="control">
+                    <i class="fa fa-trash fa-2x" onclick="removepic()"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <form method="POST" enctype="multipart/form-data" action="{{url_for('main.update_pic',data_id=image.id,form=form_pic)}}">
+              <div class="form-group">
+                {{ form_pic.picture.label() }}
+                {{ form_pic.picture(class="form-control-file") }}
+                {% if form_pic.picture.errors %}
+                  {% for error in form_pic.picture.errors %}
+                      <span class="text-danger">{{ error }}</span></br>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <span class="form-group">
+                <button type="submit" class="btn btn-primary" id="submit_pic">Save changes</button>
+              </span>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="restore()">Close</button>
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      if($("#current").prop("checked") == true) {
+          $("#end").attr("disabled",true)
+        }
+      else{
+        $("#end").attr("disabled",false)
+      }
+      $("#current").change(function() {
+        if(this.checked) {
+          $("#end").attr("disabled",true)
+        }
+        else{
+          $("#end").attr("disabled",false)
+        }
+      }); 
+    </script>
+    {% if pic %}
+      <script>
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#recom_pic").attr("src", e.target.result);
+        };
+
+        function readURL(input) {
+          if (input.files && input.files[0]) {
+            console.log(input.files);
+            reader.readAsDataURL(input.files[0]);
+          }
+        }
+
+        $("#picture").change(function () {
+          if (!document.getElementById("picture").value) {
+            $(".modal #submit_pic").attr("disabled", true);
+          } else {
+            readURL(this);
+            $(".modal #submit_pic").attr("disabled", false);
+          }
+        });
+        function removepic() {
+          $("#recom_pic").attr(
+            "src",
+            "{{ url_for('static',filename='img/recom.jpg') | autoversion}}"
+          );
+          if (document.getElementById("picture").value) {
+            document.getElementById("picture").value = "";
+          }
+          $(".modal #submit_pic").attr("disabled", false);
+        }
+        function restore() {
+          $("#recom_pic").attr(
+            "src",
+            "{{url_for('static',filename='img/'+image.image_file) | autoversion}}"
+          );
+          $(".modal #submit_pic").attr("disabled", true);
+          if (document.getElementById("picture").value) {
+            document.getElementById("picture").value = "";
+          }
+        }
+        if (!document.getElementById("picture").value) {
+          $(".modal #submit_pic").attr("disabled", true);
+        }
+
+      </script>
+    {% endif %}
+  </body>
+</html>

@@ -1,0 +1,330 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none !important;
+}
+._container {
+  overflow-x: hidden;
+}
+.hamburger_menu {
+  position: fixed;
+  top: 5%;
+  right: 5%;
+  z-index: 99;
+}
+.hamburger_menu .hamburger {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  cursor: pointer;
+  border: 1px solid whitesmoke;
+}
+.hamburger .hamburger_line {
+  width: 50%;
+  height: 3px;
+  background: chocolate;
+  position: relative;
+  transition: 0.7s ease;
+}
+.hamburger .hamburger_line::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: chocolate;
+  transform: translateY(5.5px);
+  transition: 0.7s ease;
+}
+.hamburger .hamburger_line::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: chocolate;
+  transform: translateY(-5.5px);
+  transition: 0.7s ease;
+}
+.hamburger.active .hamburger_line {
+  background: transparent;
+}
+.hamburger.active .hamburger_line::before {
+  transform: translateY(0px) rotate(45deg);
+}
+.hamburger.active .hamburger_line::after {
+  transform: translateY(0px) rotate(-45deg);
+}
+.nav_links_container {
+  position: fixed;
+  left: -15vw;
+  width: 15vw;
+  height: 100vh;
+  background: rgb(15, 15, 15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s ease;
+}
+.nav_links_container.active {
+  left: 0;
+}
+.nav_links li {
+  list-style: none;
+  margin: 2rem 0;
+}
+.nav_links li a {
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  color: chocolate;
+  font-size: 1.2rem;
+  margin-left: 10px;
+}
+.nav_links li i {
+  color: chocolate;
+  transform: scale(1.1);
+}
+.data_content {
+  transition: 0.5s ease;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+.data_content.active {
+  transform: translateX(15vw);
+}
+.data_content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: 0.7s ease;
+  pointer-events: none;
+  z-index: 98;
+}
+.data_content.active::before {
+  background: rgba(0, 0, 0, 0.5);
+}
+.data_content h2 {
+  width: 40%;
+  margin: 4rem auto 4rem;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  font-size: 2rem;
+  color: chocolate;
+  border-bottom: 1.5px solid black;
+  font-weight: 700;
+}
+.data_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.data_container .data {
+  width: 70%;
+  height: 450px;
+  margin-bottom: 2rem;
+  border-radius: 30px 30px 0px 0px;
+  overflow: hidden;
+  transition: 0.7s ease;
+  box-shadow: 4px 10px 21px 0px rgba(0, 0, 0, 0.5);
+}
+.data_container .data .header {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  height: 40px;
+  background: black;
+  color: chocolate;
+  position: relative;
+  font-size: 1.2rem;
+}
+.data_container .data .header .add {
+  position: absolute;
+  left: 3%;
+  height: 10px;
+  width: 10px;
+  top: calc(50% - 5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.data_container .data .header .open {
+  position: absolute;
+  right: 3%;
+  height: 10px;
+  width: 10px;
+  top: calc(50% - 5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transform: rotate(180deg);
+  transition: 0.7s ease;
+}
+.main_content {
+  height: calc(100% - 40px);
+  background: rgba(128, 128, 128, 0.795);
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.main_content .testi {
+  width: 70%;
+  margin: 1.1rem;
+  font-family: "Poppins", sans-serif;
+  background: white;
+  height: fit-content;
+  height: -moz-fit-content;
+  padding: 1rem;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+.manage {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.7s ease;
+  padding: 0.85rem;
+  pointer-events: none;
+}
+
+.manage i {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: chocolate;
+  transform: scale(1.5);
+  cursor: pointer;
+}
+.main_content .testi:hover .manage,
+.main_content .skill:hover .manage,
+.main_content .project:hover .manage,
+.main_content .job:hover .manage {
+  opacity: 1;
+  pointer-events: auto;
+}
+.testimonials,
+.skills,
+.projects,
+.jobs {
+  height: 40px !important;
+}
+.testimonials.active,
+.skills.active,
+.projects.active,
+.jobs.active {
+  height: 450px !important;
+}
+.skill {
+  min-width: 30%;
+  height: 50px;
+  position: relative;
+  text-align: center;
+  background: whitesmoke;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0.8rem;
+}
+.project,
+.job {
+  width: 50%;
+  height: auto;
+  margin: 15px;
+  padding: 0.9rem;
+  overflow: hidden;
+  position: relative;
+  background: whitesmoke;
+  border-radius: 10px;
+  text-align: center;
+}
+.resume_uploader {
+  width: 70%;
+  margin: 30px auto 70px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(130, 130, 148, 0.966);
+  font-family: "Poppins", sans-serif;
+}
+.resume_uploader form {
+  margin-bottom: 20px;
+}
+.resume_uploader .uploader {
+  margin: 20px;
+}
+.resume_uploader .uploader .progress {
+  margin-top: 20px;
+}
+.btn-primary {
+  color: black;
+  background-color: whitesmoke;
+}
+.btn-secondary {
+  color: chocolate;
+  background-color: black;
+}
+@media screen and (max-width: 1000px) {
+  .data_content h2 {
+    width: 60%;
+    font-size: 1.5rem;
+  }
+  .data_container .data {
+    width: 90%;
+  }
+  .nav_links_container {
+    width: 40vw;
+    left: -40vw;
+  }
+  .data_content.active {
+    transform: translateX(40vw);
+  }
+  .main_content .testi {
+    font-size: 0.7rem;
+    width: 90%;
+  }
+  .main_content .testi img {
+    height: 95px;
+  }
+  .project,
+  .job {
+    width: 90%;
+  }
+  .project,
+  .job {
+    border-radius: 20px 20px 0px 0px;
+  }
+  .resume_uploader {
+    width: 90%;
+  }
+}

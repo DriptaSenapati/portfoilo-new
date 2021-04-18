@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{{ url_for('static', filename='img/logo-modified.png') | autoversion}}" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/admin.css') | autoversion}}"
+    />
+
+    <title>Admin Page</title>
+  </head>
+  <body>
+    <div class="_container">
+      <div class="nav_container">
+        <div class="hamburger_menu">
+          <div class="hamburger">
+            <div class="hamburger_line"></div>
+          </div>
+        </div>
+        <div class="nav_links_container">
+          <ul class="nav_links">
+            <li class="nav_link">
+              <i class="fa fa-external-link" aria-hidden="true"></i
+              ><a href="{{url_for('main.home')}}">Website</a>
+            </li>
+            <li class="nav_link">
+              <i class="fa fa-sign-out" aria-hidden="true"></i
+              ><a href="{{url_for('main.logout')}}">LogOut</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="data_content">
+        <h2>My Data List</h2>
+        <div class="data_container">
+          <div class="data testimonials">
+            <div class="header">
+              Testimonial List
+              <div class="add">
+                <a
+                  href="{{url_for('main.add_entry',form_type='testimoni')}}"
+                  style="color: chocolate"
+                  ><i class="fa fa-plus" aria-hidden="true"></i
+                ></a>
+              </div>
+              <div class="open">
+                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="main_content">
+              {% for test in testimoni %}
+              <div class="testi">
+                <div class="media">
+                  <img
+                    class="mr-3 rounded-circle"
+                    src="{{ url_for('static',filename='img/'+test.image_file) | autoversion }}"
+                    alt="Generic placeholder image"
+                  />
+                  <div class="media-body">
+                    <h5 class="mt-0">{{test.name}}</h5>
+                    <h6>{{test.desc}}</h6>
+                    {{test.testimony}}
+                  </div>
+                </div>
+                <div class="manage">
+                  <a
+                    href="{{url_for('main.delete_post',data_id=test.id,form_type='testimoni')}}"
+                    style="color: chocolate"
+                    ><i class="fa fa-trash" aria-hidden="true"></i
+                  ></a>
+                  <a
+                    href="{{url_for('main.edit_post',data_id=test.id,form_type='testimoni')}}"
+                    style="color: chocolate"
+                    ><i class="fa fa-pencil-square-o" aria-hidden="true"></i
+                  ></a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="data skills">
+            <div class="header">
+              Skill List
+              <div class="add">
+                <a
+                  href="{{url_for('main.add_entry',form_type='skill')}}"
+                  style="color: chocolate"
+                  ><i class="fa fa-plus" aria-hidden="true"></i
+                ></a>
+              </div>
+              <div class="open">
+                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="main_content">
+              {% for i in skills %}
+              <div class="skill">
+                {{i.sk_name}} : {{i.sk_value}}
+                <div class="manage">
+                  <a
+                    href="{{url_for('main.delete_post',data_id=i.id,form_type='skill')}}"
+                    style="color: chocolate"
+                    ><i class="fa fa-trash" aria-hidden="true"></i
+                  ></a>
+                  <a
+                    href="{{url_for('main.edit_post',data_id=i.id ,form_type='skill')}}"
+                    style="color: chocolate"
+                    ><i class="fa fa-pencil-square-o" aria-hidden="true"></i
+                  ></a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="data projects">
+            <div class="header">
+              Project List
+              <div class="add">
+                <a
+                  href="{{url_for('main.add_entry',form_type='project')}}"
+                  style="color: chocolate"
+                  ><i class="fa fa-plus" aria-hidden="true"></i
+                ></a>
+              </div>
+              <div class="open">
+                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="main_content">
+              {% for p in projects %}
+              <div class="project">
+                <h5>{{p.p_name}}</h5>
+                {% if p.p_description %}
+                <p>{{p.p_description}}</p>
+                {% endif %} {% if p.p_url %} {% if 'pypi' in p.p_url %}
+                <p>Pypi Link: <a href="{{p.p_url}}">{{p.p_url}}</a></p>
+                {% else %} {% if 'github' in p.p_url %}
+                <p>GitHub Link: <a href="{{p.p_url}}">{{p.p_url}}</a></p>
+                {% else %}
+                <p>Link: <a href="{{p.p_url}}">{{p.p_url}}</a></p>
+                {% endif %} {% endif %} {% endif %} {% if p.Organization %}
+                <p>Organization: {{p.Organization}}</p>
+                {% endif %} {% if p.cred_id %}
+                <p>Credential id: {{p.cred_id}}</p>
+                {% endif %} {% if p.certi_url %}
+                <p>
+                  Credential Url: <a href="{{p.certi_url}}">{{p.certi_url}}</a>
+                </p>
+                {% endif %}
+                <div class="manage">
+                  <a
+                    href="{{url_for('main.delete_post',data_id=p.id,form_type='project')}}"
+                    style="color: chocolate"
+                    ><i class="fa fa-trash" aria-hidden="true"></i
+                  ></a>
+                  <a
+                    href="{{url_for('main.edit_post',data_id=p.id ,form_type='project')}}"
+                    style="color: chocolate"
+                    ><i class="fa fa-pencil-square-o" aria-hidden="true"></i
+                  ></a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="data jobs">
+            <div class="header">
+              Job List
+              <div class="add">
+                <a
+                  href="{{url_for('main.add_entry',form_type='job')}}"
+                  style="color: chocolate"
+                  ><i class="fa fa-plus" aria-hidden="true"></i
+                ></a>
+              </div>
+              <div class="open">
+                <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="main_content">
+              {% for job in jobs %}
+              <div class="job">
+                <h5>{{job.role}}</h5>
+                <p>{{job.company}}</p>
+                {% if not job.end %}
+                <p>{{job.start.strftime("%b %Y")}}-present</p>
+                {% else %}
+                <p>
+                  {{job.start.strftime("%b %Y")}}-{{job.end.strftime("%b %Y")}}
+                </p>
+                {% endif %}
+                <p>{{job.place}}</p>
+                <p>{{job.jd}}</p>
+                <div class="manage">
+                  <a
+                    href="{{url_for('main.delete_post',data_id=job.id,form_type='job')}}"
+                    style="color: chocolate"
+                    ><i class="fa fa-trash" aria-hidden="true"></i
+                  ></a>
+                  <a
+                    href="{{url_for('main.edit_post',data_id=job.id ,form_type='job')}}"
+                    style="color: chocolate"
+                    ><i class="fa fa-pencil-square-o" aria-hidden="true"></i
+                  ></a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="resume_uploader">
+            <h4 style="margin: 15px; text-align: center;">Upload <span style="color: chocolate;">Resume</span> </h4>
+            <hr />
+            <div class="uploader">
+              <form>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="customFile" />
+                  <label class="custom-file-label" for="customFile"
+                    >Choose file</label
+                  >
+                </div>
+              </form>
+              <button class="btn btn-primary" id="upload" onclick="upload();">
+                Upload
+              </button>
+              <button class="btn btn-secondary" id="reset_btn" onclick="reset();">
+                Reset
+              </button>
+              <button class="btn btn-primary d-none" id="cancel_btn">
+                Cancel upload
+              </button>
+              <button class="btn btn-primary d-none" id="loading_btn" type="button" disabled>
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Uploading...
+              </button>
+              <button class="btn btn-secondary d-none" id="cancel_btn" type="button">Cancel Upload</button>
+              <div class="progress d-none">
+                <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" id="progress_bar">0%</div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(".hamburger").click(() => {
+        $(".hamburger").toggleClass("active");
+
+        if ($(".hamburger").hasClass("active")) {
+          $(".nav_links_container").addClass("active");
+          $(".data_content").addClass("active");
+          $(".data_content").css("pointer-events", "none");
+        } else {
+          $(".nav_links_container").removeClass("active");
+          $(".data_content").removeClass("active");
+          $(".data_content").css("pointer-events", "auto");
+        }
+      });
+      $(".testimonials .header .open").click(() => {
+        $(".testimonials").toggleClass("active");
+
+        if ($(".testimonials").hasClass("active")) {
+          $(".data_container .testimonials .header .open").css(
+            "transform",
+            "rotate(0deg)"
+          );
+        } else {
+          $(".data_container .testimonials .header .open").css(
+            "transform",
+            "rotate(180deg)"
+          );
+        }
+      });
+      $(".skills .header .open").click(() => {
+        $(".skills").toggleClass("active");
+
+        if ($(".skills").hasClass("active")) {
+          $(".data_container .skills .header .open").css(
+            "transform",
+            "rotate(0deg)"
+          );
+        } else {
+          $(".data_container .skills .header .open").css(
+            "transform",
+            "rotate(180deg)"
+          );
+        }
+      });
+      $(".projects .header .open").click(() => {
+        $(".projects").toggleClass("active");
+
+        if ($(".projects").hasClass("active")) {
+          $(".data_container .projects .header .open").css(
+            "transform",
+            "rotate(0deg)"
+          );
+        } else {
+          $(".data_container .projects .header .open").css(
+            "transform",
+            "rotate(180deg)"
+          );
+        }
+      });
+      $(".jobs .header .open").click(() => {
+        $(".jobs").toggleClass("active");
+
+        if ($(".jobs").hasClass("active")) {
+          $(".data_container .jobs .header .open").css(
+            "transform",
+            "rotate(0deg)"
+          );
+        } else {
+          $(".data_container .jobs .header .open").css(
+            "transform",
+            "rotate(180deg)"
+          );
+        }
+      });
+    </script>
+    <script>
+      $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+      });
+      var input = document.getElementById("customFile");
+      function upload(){
+        if (!input.value) {
+          alert("No file is chosen");
+          return;
+        }
+        var data = new FormData();
+        var request = new XMLHttpRequest();
+        request.responseType = "json";
+        input.disabled = true;
+        $("#upload").addClass("d-none");
+        $("#loading_btn").removeClass("d-none");
+        $(".progress").removeClass("d-none");
+        $("#cancel_btn").removeClass("d-none");
+        $("#reset_btn").addClass("d-none");
+        var file = input.files[0];
+        var fileName = file.name;
+        var filesize = file.size;
+
+        document.cookie = `filesize=${filesize}`;
+        data.append("file",file);
+
+        request.upload.addEventListener("progress", function(e){
+          var loaded = e.loaded;
+          var total = e.total;
+          var percentage = (loaded/total)*100;
+          $("#progress_bar").attr("style", `width:${Math.floor(percentage)}%`);
+          $("#progress_bar").text(`${Math.floor(percentage)}%`);
+        })
+
+        request.addEventListener("load",function(e){
+          if (request.status == 200) {
+
+            alert("Resume Upload Done.");
+          }else{
+            alert("Error while uploading file.");
+          }
+          reset();
+        })
+
+        request.open("post","/upload_resume");
+        request.send(data);
+        $("#cancel_btn").click(function(){
+          request.abort();
+          reset();
+        })
+      }
+
+      function reset(){
+        input.value = null;
+        input.disabled = false;
+        $("#cancel_btn").addClass("d-none");
+        $("#upload").removeClass("d-none");
+
+        $(".progress").addClass("d-none");
+
+        $(".progress").addClass("d-none");
+        $("#loading_btn").addClass("d-none");
+
+
+        $(".custom-file-label").text("Choose file");
+        $("#progress_bar").attr("style", "width:0%");
+        $("#reset_btn").removeClass("d-none");
+      }
+    </script>
+  </body>
+</html>
