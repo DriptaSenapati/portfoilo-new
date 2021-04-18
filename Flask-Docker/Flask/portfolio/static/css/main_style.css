@@ -711,6 +711,7 @@ h4 {
   min-height: 100vh;
   background: rgb(27 25 26);
   overflow: hidden;
+  position: relative;
 }
 .accomplishment_container {
   height: 100%;
@@ -765,7 +766,7 @@ h4 {
 }
 .filter_content .item {
   width: 40vw;
-  max-height: 250px;
+  /* max-height: 250px; */
   background: #cacaca;
   margin: 25px;
   border-radius: 15px;
