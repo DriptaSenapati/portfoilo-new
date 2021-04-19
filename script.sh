@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/driptasenapati97/portfolio-new/
+cd /home/driptasenapati97/portfoilo-new/
 
 git pull origin master
 
