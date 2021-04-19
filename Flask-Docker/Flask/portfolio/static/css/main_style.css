@@ -760,6 +760,9 @@ h4 {
 .filter_content {
   width: 90%;
   margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .filter_content .item h4 {
   margin-bottom: 20px;

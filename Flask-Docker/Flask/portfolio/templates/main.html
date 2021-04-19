@@ -209,7 +209,7 @@
       <h3 class="accomplishment_header">My Portfolio</h3>
       <div class="accomplishment_content">
         <ul>
-          <li class="list active" data-filter="*">All</li>
+          <li class="list active" data-filter="all">All</li>
           <li class="list" data-filter="projects">Projects</li>
           <li class="list" data-filter="certificates">Certificates</li>
         </ul>
@@ -523,17 +523,6 @@
     $(".itemexp").not(".Job").hide();
     $(".itemexp").filter(".Job").show();
 
-
-
-
-
-
-
-
-
-
-
-
     $(".readButton button").click(() => {
       $(".modal_skills").addClass("active");
 
@@ -582,28 +571,23 @@
   <script>
     var list = document.querySelectorAll(".list");
 
-
-    $('.filter_content').isotope({
-      itemSelector: '.filter_content .item',
-      // layoutMode: 'fitRows'
-    });
-
     $(".accomplishment_content .list").click((e)=>{
 
       var selector = e.target.dataset.filter;
       $(`.${e.target.className}`).siblings().removeClass("active");
       e.target.classList.add("active");
       
-      if (selector != '*') {
-        selector = '.'+selector;
+      var select = e.target.dataset.filter;
+      if (select == "all") {
+        $(".item").show('1000')
+      }
+      else{
+        $(".item").not("."+select).hide("1000");
+        $(".item").filter("."+select).show("1000");
       }
 
-      $('.filter_content').isotope({
-        filter: selector
-      });
-
-
     })
+
   </script>
 </body>
 
