@@ -7,5 +7,4 @@ git pull origin master
 
 if [ $? -eq 0 ]; then
     docker-compose up --build -d
-    service supervisor restart
 fi
