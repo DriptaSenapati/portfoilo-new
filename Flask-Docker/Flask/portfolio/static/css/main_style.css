@@ -944,13 +944,13 @@ h4 {
   }
   .data_container .job_container,
   .data_container .testimonial_container {
-    min-height: 150px;
+    min-height: 175px;
     margin-bottom: 1rem;
     border-radius: 15px;
   }
   .data_container .job_container .job,
   .data_container .testimonial_container .testi {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     padding: 0.7rem 0.7rem 0rem 0.7rem;
   }
   .data_container .skills {
