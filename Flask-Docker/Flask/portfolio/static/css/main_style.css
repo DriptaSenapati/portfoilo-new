@@ -1043,7 +1043,7 @@ h4 {
   }
   .social {
     left: 80%;
-    bottom: 50px;
+    bottom: 10vh;
     z-index: 11;
   }
   .social ul {
