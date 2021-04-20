@@ -99,7 +99,40 @@ header {
   position: relative;
   overflow: hidden;
 }
-
+.social {
+  position: absolute;
+  bottom: 16%;
+  left: 13%;
+  width: 15%;
+  z-index: 11;
+}
+.social ul {
+  display: flex;
+  justify-content: space-between;
+}
+.social ul li {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  background: yellow;
+  transition: 0.7s ease;
+}
+.social ul li a {
+  text-decoration: none;
+}
+.social ul li:hover {
+  background: transparent;
+}
+.social ul li:hover > a {
+  color: yellow;
+}
+.social ul li a i {
+  font-size: 1.4rem;
+}
 .landing_page_container {
   position: absolute;
   top: 50%;
@@ -1007,5 +1040,37 @@ h4 {
   }
   .testimonial_container .testi p {
     font-size: 0.49rem;
+  }
+  .social {
+    left: 80%;
+    bottom: 5%;
+    z-index: 11;
+  }
+  .social ul {
+    flex-direction: column;
+    height: 140px;
+  }
+  .social ul li {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    background: yellow;
+    transition: 0.7s ease;
+  }
+  .social ul li a {
+    text-decoration: none;
+  }
+  .social ul li:hover {
+    background: transparent;
+  }
+  .social ul li:hover > a {
+    color: yellow;
+  }
+  .social ul li a i {
+    font-size: 1.4rem;
   }
 }
