@@ -927,7 +927,7 @@ h4 {
     width: 80%;
   }
   .data_container {
-    width: 80%;
+    width: 90%;
   }
   .resume_header {
     font-size: 0.85rem;
@@ -955,7 +955,7 @@ h4 {
   }
   .data_container .skills {
     min-height: 50px;
-    padding: 0.5rem;
+    padding: 0.8rem;
     font-size: 0.6rem;
     border-radius: 15px;
   }
@@ -1006,6 +1006,6 @@ h4 {
     font-size: 0.85rem;
   }
   .testimonial_container .testi p {
-    font-size: 0.4rem;
+    font-size: 0.49rem;
   }
 }
