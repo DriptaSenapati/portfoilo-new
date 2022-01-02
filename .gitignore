@@ -2,7 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-portfoliodata.db
 # C extensions
 *.so
 
